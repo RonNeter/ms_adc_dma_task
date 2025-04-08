@@ -1,0 +1,14 @@
+../Core/Src/main.c:85:6:printTitle	1
+../Core/Src/main.c:104:6:ConfigureADCWithDMA_F3	3
+../Core/Src/main.c:136:6:printDebug	1
+../Core/Src/main.c:146:6:sendSensorData	1
+../Core/Src/main.c:161:6:HAL_TIM_PeriodElapsedCallback	3
+../Core/Src/main.c:183:6:HAL_GPIO_EXTI_Callback	2
+../Core/Src/main.c:196:5:main	3
+../Core/Src/main.c:285:6:SystemClock_Config	4
+../Core/Src/main.c:332:13:MX_ADC1_Init	6
+../Core/Src/main.c:416:13:MX_TIM6_Init	3
+../Core/Src/main.c:454:13:MX_USART2_UART_Init	2
+../Core/Src/main.c:487:13:MX_DMA_Init	1
+../Core/Src/main.c:505:13:MX_GPIO_Init	1
+../Core/Src/main.c:551:6:Error_Handler	1
