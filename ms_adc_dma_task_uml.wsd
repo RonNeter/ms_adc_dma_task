@@ -1,0 +1,65 @@
+@startuml
+
+' Hardware classes
+class "STM32F303RE" as MCU {
+  +ADC1
+  +DMA1
+  +TIM6
+  +USART2
+  +GPIO
+}
+
+' Interrupt handlers
+class "Interrupt Handlers" as IRQ {
+  +HAL_TIM_PeriodElapsedCallback()
+  +HAL_GPIO_EXTI_Callback()
+  +DMA1_Channel1_IRQHandler()
+}
+
+' Main application classes
+class "Main" as Main {
+  -adc_buffer[3]
+  -system_timestamp
+  -send_data_flag
+  -button_pressed
+  +main()
+  +printTitle()
+  +printDebug()
+}
+
+class "ADC_DMA_Handler" as ADC_DMA {
+  +ConfigureADCWithDMA_F3()
+  -__HAL_RCC_ADC12_CLK_ENABLE()
+  -__HAL_LINKDMA()
+}
+
+class "Data_Handler" as Data {
+  +sendSensorData()
+}
+
+' Relationships
+MCU <-- Main : initializes
+Main --> ADC_DMA : configures
+Main --> Data : uses
+IRQ --> Main : updates flags
+Data --> MCU : sends via USART2
+
+note right of ADC_DMA::ConfigureADCWithDMA_F3
+  Direct register configuration:
+  - Configures DMA1_Channel1
+  - Sets up ADC1 in continuous mode
+  - Links ADC to DMA
+end note
+
+note right of IRQ::HAL_TIM_PeriodElapsedCallback
+  Called every 100ms
+  Sets send_data_flag
+  Updates timestamp
+end note
+
+note right of IRQ::HAL_GPIO_EXTI_Callback
+  Button press interrupt
+  Resets timestamp
+end note
+
+@enduml
